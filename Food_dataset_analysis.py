@@ -1,14 +1,12 @@
-import numpy as np
 import pandas as pd
-import os
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud, STOPWORDS
+from wordcloud import STOPWORDS
+
 stopwords = set(STOPWORDS)
-import seaborn as sns
-from plotly.offline import init_notebook_mode, iplot
+from plotly.offline import init_notebook_mode
+
 init_notebook_mode()
-from collections import Counter
 import nltk
+
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
@@ -17,7 +15,7 @@ stop.update(['.', ',', '"', "'", '?', '!', ':', ';', '(', ')', '[', ']', '{', '}
 from nltk.stem import WordNetLemmatizer
 
 food_data = pd.read_csv('food_choices - food_choices.csv')
-# print(food_data.info())
+
 
 def search_comfort(mood):
     lemmatizer = WordNetLemmatizer()
@@ -33,16 +31,12 @@ def search_comfort(mood):
                     foodcount[a] = 1
                 else:
                     foodcount[a] += 1
-    sorted_food = []
     sorted_food = sorted(foodcount, key=foodcount.get, reverse=True)
     return sorted_food
 
 
 def find_my_comfort_food(mood):
-    topn = []
     topn = search_comfort(mood)  # function create dictionary only for particular mood
     print("3 popular comfort foods in %s are:" % (mood))
     print(topn)
     return topn
-
-
